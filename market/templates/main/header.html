@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="{% url 'home' %}">Online Market</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'item' %}">Items</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'order' %}">Cart
+                    {% if count %}
+                    <span style="color:white;background-color:black;padding:0px 5px 0px 5px; font-weight:800;">
+                        {{count}}
+                    </span></a>
+                    {% endif %}
+            </li>
+        </ul>
+        <ul class="navbar-nav" style="padding-right:15px;">
+            {% if user.is_authenticated %}
+            <li class="nav-item" style="margin-right:30px;">
+                <a style="color:white" class="nav-class" href="#">Hello, {{ user.username }}</a>
+            </li>
+            <li class="nav-item" style="padding-right:10px;">
+                <a class="nav-class" href="{% url 'logout' %}">Log Out</a>
+            </li>
+
+            {% else %}
+            <li class="nav-item" style="padding-right:5px;">
+                <a class="nav-class" href="{% url 'login' %}">Login</a>
+            </li>
+            <li class="nav-item" style="padding-right:5px;">
+                <a class="nav-class" href="{% url 'register' %}">Register</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

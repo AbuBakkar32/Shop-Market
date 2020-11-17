@@ -1,0 +1,48 @@
+{% include 'main/base.html' %}
+{% block title %}
+{% endblock %}
+
+{% block content %}
+
+{% if items %}
+<div class="container">
+    <table class="table table-hover" style="text-align:center">
+        <thead style="text-align:center">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Image</th>
+            <th scope="col">Price</th>
+            <th scope="col">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+        {% include 'main/item_models.html' %}
+        <tr>
+            <th scope="row">{{item.pk}}</th>
+            <td>{{item.name}}</td>
+            <td>
+                <image alt="image" style="width:30px; height:30px;" src="{{item.image_url}}"/>
+            </td>
+            <td>{{item.price}}</td>
+            <td>
+                <button type="button" class="btn btn-sm btn-primary"
+                        data-toggle="modal" data-target="#Modal-MoreInfo{{ item.pk }}">
+                    More Info
+                </button>
+                <button type="button" class="btn btn-sm btn-success"
+                        data-toggle="modal" data-target="#Modal-PurchaseConfirm{{item.pk}}">
+                    Purchase this Item
+                </button>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+     {% else %}
+        <div class="alert alert-danger" style="margin-top:10px;text-align:center;">Opps!!!!! There Are No Iteam Left !!!!!<br>Please <a
+			href="#">Add</a> a New Iteam</div>
+</div>
+{% endif %}
+{% endblock %}

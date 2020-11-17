@@ -1,0 +1,51 @@
+{% include 'main/base.html' %}
+{% block title %}
+{% endblock %}
+
+{% block content %}
+
+{% if item_list %}
+<div class="container">
+    <table class="table table-hover" style="text-align:center">
+        <thead style="text-align:center">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Image</th>
+            <th scope="col">Price</th>
+            <th colspan="2">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in item_list %}
+        {% include 'main/item_models.html' %}
+        <tr>
+            <th scope="row">{{item.pk}}</th>
+            <td>{{item.name}}</td>
+            <td>
+                <image alt="image" style="width:30px; height:30px;" src="{{item.image_url}}"/>
+            </td>
+            <td>{{item.price}}</td>
+            <td>
+                <button type="button" class="btn btn-sm btn-primary"
+                        data-toggle="modal" style="display:inline;" data-target="#Modal-MoreInfo{{ item.pk }}">
+                    More Info
+                </button>
+
+                <form style="display:inline" method="POST" action="{% url 'orderCancel' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="cancel-item" value="{{ item.name }}">
+                    <button type="submit" class="btn btn-sm btn-success" style="display:inline">Order Cancel</button>
+                    {{ purchased_item }}
+                </form>
+                
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="alert alert-danger" style="margin-top:10px;text-align:center;">You Have No Purchase Item</div>
+</div>
+{% endif %}
+{% endblock %}
